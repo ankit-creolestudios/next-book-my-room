@@ -7,14 +7,22 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seeder":"node utils/seeder.js"
+    "seeder": "node utils/seeder.js"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "mongoose": "^6.5.2",
     "next": "12.2.5",
+    "next-auth": "^4.10.3",
     "next-connect": "^0.13.0",
+    "next-redux-wrapper": "^7.0.5",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-js-pagination": "^3.0.3",
+    "react-redux": "^8.0.2",
+    "react-toastify": "^9.0.8",
+    "redux": "^4.2.0",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "eslint": "8.22.0",
