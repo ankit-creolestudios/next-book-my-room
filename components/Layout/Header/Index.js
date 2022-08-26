@@ -1,12 +1,15 @@
+import Link from "next/link";
 import React from "react";
 
 const Header = () => {
   return (
     <nav className="navbar container">
       <div className="row">
-        <div className="col-3">
-          <img src="/images/logo.png" />
-        </div>
+        <Link href={"/"}>
+          <div className="col-3">
+            <img src="/images/logo.png" className="book-logo" />
+          </div>
+        </Link>
         <div className="col-3"></div>
       </div>
     </nav>

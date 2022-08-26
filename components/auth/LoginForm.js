@@ -2,61 +2,68 @@ import React, { useState } from "react";
 // import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import ButtonLoader from "../Layout/ButtonLoader";
 const LoginForm = () => {
   const [login, setLogin] = useState({ email: "", password: "" });
-
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
-  // const submitHandler = async (e) => {
-  //   e.preventDefault();
-  //   const res = await signIn("credentials", {
-  //     redirect: false,
-  //     email: state.email,
-  //     password: state.password,
-  //   });
-  //   console.log(res);
-  //   if (res.error) {
-  //     toast.error(res.error);
-  //   } else {
-  //     router.push("/");
-  //   }
-  // };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(login);
+    setLoading(true);
   };
   const handleChange = (e) => {
     const name = e.target.name;
-
-    console.log(name);
     const value = e.target.value;
     setLogin({ ...login, [name]: value });
   };
   console.log(login);
   return (
-    <div>
-      Login
-      <div>
-        <div>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label>Email</label>
+    <div className="container container-fluid">
+      <div className="row wrapper">
+        <div className="col-10 col-lg-5">
+          <form className="shadow-lg" onSubmit={handleSubmit}>
+            <h1 className="mb-3">Login</h1>
+            <div className="form-group">
+              <label htmlFor="email_field">Email</label>
               <input
-                type="text"
+                type="email"
+                id="email_field"
+                name="email"
+                className="form-control"
                 value={login.email}
                 onChange={handleChange}
-                name="email"
               />
             </div>
-            <div>
-              <label>Password</label>
+
+            <div className="form-group">
+              <label htmlFor="password_field">Password</label>
               <input
-                type="text"
+                type="password"
+                id="password_field"
                 name="password"
+                className="form-control"
                 value={login.password}
                 onChange={handleChange}
               />
             </div>
-            <button>Login</button>
+
+            <Link href="/password/forgot" className="float-right mb-4">
+              Forgot Password?
+            </Link>
+
+            <button
+              id="login_button"
+              type="submit"
+              className="btn btn-block py-3"
+              disabled={loading ? true : false}
+            >
+              {loading ? <ButtonLoader /> : "LOGIN"}
+            </button>
+
+            <Link href="/register" className="float-right mt-3">
+              New User?
+            </Link>
           </form>
         </div>
       </div>

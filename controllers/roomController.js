@@ -35,9 +35,7 @@ const newRoom = async (req, res) => {
 // get room by id           /api/rooms/:id
 const getSingleRoom = async (req, res) => {
   try {
-    console.log(1, req.query, req.query.id);
     const room = await Room.findById(req.query.id);
-    console.log(room);
     if (!room) {
       return res
         .status(404)
@@ -48,7 +46,6 @@ const getSingleRoom = async (req, res) => {
       room,
     });
   } catch (error) {
-    console.log(3);
     res.status(400).json({
       success: false,
       error: error.message,
@@ -72,7 +69,6 @@ const updateRoom = async (req, res) => {
       room,
     });
   } catch (error) {
-    console.log(3);
     res.status(400).json({
       success: false,
       error: error.message,
@@ -93,7 +89,6 @@ const removeRoom = async (req, res) => {
       message: "room remove",
     });
   } catch (error) {
-    console.log(3);
     res.status(400).json({
       success: false,
       error: error.message,

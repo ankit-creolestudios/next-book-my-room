@@ -4,12 +4,7 @@ import LoginForm from "../components/auth/LoginForm";
 const Login = () => {
   return (
     <div>
-      login
-      <div>
-        <div>
-          <LoginForm />
-        </div>
-      </div>
+      <LoginForm />
     </div>
   );
 };

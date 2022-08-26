@@ -14,7 +14,6 @@ const seedRoom = async () => {
     await Room.deleteMany();
     await Room.insertMany(room);
   } catch (error) {
-    console.log(error.message);
     process.exit();
   }
 };
