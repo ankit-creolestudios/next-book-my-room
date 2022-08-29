@@ -1,20 +1,14 @@
+import catchAsyncError from "../middlewares/catchAsyncError";
 import Room from "../models/room";
-const getAllRooms = async (req, res) => {
-  try {
-    const rooms = await Room.find();
+const getAllRooms = catchAsyncError(async (req, res) => {
+  const rooms = await Room.find();
 
-    res.status(200).json({
-      sucess: true,
-      roomTotal: rooms.length,
-      rooms,
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      error: error.message,
-    });
-  }
-};
+  res.status(200).json({
+    sucess: true,
+    roomTotal: rooms.length,
+    rooms,
+  });
+});
 
 // new room creat /api/rooms
 const newRoom = async (req, res) => {
@@ -95,4 +89,84 @@ const removeRoom = async (req, res) => {
     });
   }
 };
-export { getAllRooms, newRoom, getSingleRoom, updateRoom, removeRoom };
+
+//new review ------------ /api/review
+const newReview = catchAsyncError(async (req, res) => {
+  const { roomId, rating, comment } = req.body;
+  const review = {
+    user: req.user._id,
+    name: req.user.name,
+    rating: Number(rating),
+    comment,
+  };
+  const room = await Room.findById(roomId);
+  const isReviewed = await room.reviews.find(
+    (review) => review.user.toString() === req.user._id.toString()
+  );
+  if (isReviewed) {
+    room.reviews.forEach((review) => {
+      if (review.user.toString() === req.user._id.toString()) {
+        review.comment = comment;
+        review.rating = rating;
+      }
+    });
+  } else {
+    room.reviews.push(review);
+    room.numOfReviews = room.reviews.length;
+  }
+  room.ratings =
+    room.reviews.reduce((acc, item) => item.rating + acc, 0) /
+    room.reviews.length;
+  await room.save({ validateBeforeSave: false });
+  res.status(200).json({
+    success: true,
+  });
+});
+const getAllAdminRoom = catchAsyncError(async (req, res) => {
+  const rooms = await Room.find();
+  res.status(200).json({
+    success: true,
+    rooms,
+  });
+});
+// room reviews ----------------------- /api/reviews
+const getRoomReviews = catchAsyncError(async (req, res) => {
+  const room = await Room.findById(req.query.id);
+  res.status(200).json({
+    success: true,
+    reviews: room.reviews,
+  });
+});
+// remove reviews --------------------- /api/reviews
+const removeReviews = catchAsyncError(async (req, res) => {
+  const room = await Room.findById(req.query.userId);
+  const reviews = room.reviews.filter((review) => {
+    review._id.toString() === req.query.userId.toString();
+  });
+  const numOfReviews = reviews.length;
+  const ratings =
+    room.reviews.reduce((acc, item) => item.rating + acc, 0) / reviews.length;
+  await room.findOneAndUpdate(
+    {
+      reviews,
+      ratings,
+      numOfReviews,
+    },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+});
+export {
+  getAllRooms,
+  newRoom,
+  getSingleRoom,
+  updateRoom,
+  removeRoom,
+  newReview,
+  getAllAdminRoom,
+  getRoomReviews,
+  removeReviews,
+};

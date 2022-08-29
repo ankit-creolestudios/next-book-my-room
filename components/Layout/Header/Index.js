@@ -6,8 +6,8 @@ const Header = () => {
     <nav className="navbar container">
       <div className="row">
         <Link href={"/"}>
-          <div className="col-3">
-            <img src="/images/logo.png" className="book-logo" />
+          <div className="">
+            <h3>Book My Room</h3>
           </div>
         </Link>
         <div className="col-3"></div>

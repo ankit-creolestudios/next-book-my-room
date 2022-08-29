@@ -13,6 +13,7 @@ const HomeRoom = (props) => {
   }, []);
   const router = useRouter();
   const rooms = useSelector((state) => state?.rooms?.rooms);
+  console.log(rooms);
   return (
     <div>
       HomeRoom

@@ -13,21 +13,21 @@ const RoomDetail = ({ id }) => {
   return (
     <>
       <Head>
-        <title>{roomDetail.name} - Book My Room</title>
+        <title>{roomDetail?.name} - Book My Room</title>
       </Head>
 
       <div className="container container-fluid">
         <h2 className="mt-5">{roomDetail.name}</h2>
-        <p>{roomDetail.address}</p>
+        <p>{roomDetail?.address}</p>
 
         <div className="ratings mt-auto mb-3">
           <div className="rating-outer">
             <div
               className="rating-inner"
-              style={{ width: `${(roomDetail.ratings / 5) * 100}%` }}
+              style={{ width: `${(roomDetail?.ratings / 5) * 100}%` }}
             ></div>
           </div>
-          <span id="no_of_reviews">({roomDetail.numOfReviews} Reviews)</span>
+          <span id="no_of_reviews">({roomDetail?.numOfReviews} Reviews)</span>
         </div>
         <Carousel hover="pause">
           {roomDetail.images &&

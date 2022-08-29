@@ -81,7 +81,7 @@
 }
 
 .view-btn {
-  background-color:rgb(55, 109, 179);
+  background-color: rgb(55, 109, 179);
 }
 
 .view-btn a {
@@ -94,7 +94,7 @@
 
 .ratings {
   font-size: 1.2rem;
-  color:rgb(55, 109, 179);
+  color: rgb(55, 109, 179);
 }
 
 #no_of_reviews {
@@ -106,4 +106,13 @@
 .book-logo {
   width: 100px;
   height: 100px;
+}
+/* carousel design*/
+.carousel-indicators button {
+  padding: 3px 20px;
+  color: rgb(55, 109, 179) !important;
+  background: rgb(55, 109, 179);
+  border: 1px solid rgb(9, 33, 65);
+  margin: 10px 3px;
+  border-radius: 10px;
 }
