@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import ButtonLoader from "../Layout/ButtonLoader";
-const LoginForm = () => {
+const RegisterForm = () => {
   const [login, setLogin] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -55,7 +55,7 @@ const LoginForm = () => {
             </div>
 
             <Link href="/password/forgot" className="float-right mb-4">
-              Forgot Password?
+              Already have account <b>SignIn</b>
             </Link>
 
             <button
@@ -77,4 +77,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
