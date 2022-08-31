@@ -1,3 +1,5 @@
+@import "./header";
+@import "./footer";
 .wrapper {
   display: flex;
   justify-content: center;
@@ -13,7 +15,12 @@
     font-weight: bold;
   }
 }
-
+.wrapper.register {
+  margin: 3rem;
+}
+.page {
+  min-height: 78vh;
+}
 /* Button Loader */
 .button-loader {
   display: inline-block;
@@ -115,4 +122,16 @@
   border: 1px solid rgb(9, 33, 65);
   margin: 10px 3px;
   border-radius: 10px;
+}
+/* small device*/
+@media (max-width: 600px) {
+  .wrapper {
+    margin: 2rem;
+    form {
+      padding: 2rem;
+    }
+  }
+  .wrapper.register {
+    margin: 1rem;
+  }
 }

@@ -15,33 +15,27 @@ const HomeRoom = (props) => {
   const rooms = useSelector((state) => state?.rooms?.rooms);
   console.log(rooms);
   return (
-    <div>
-      HomeRoom
-      <div>
-        <section id="rooms" className="container mt-5">
-          <h2 className="mb-3 ml-2 stays-heading">
-            {/* {location ? `Rooms in ${location}` : "All Rooms"} */}
-          </h2>
+    <section id="rooms" className="container mt-5">
+      <h2 className="mb-3 ml-2 stays-heading">
+        {/* {location ? `Rooms in ${location}` : "All Rooms"} */}
+      </h2>
 
-          <Link href="/search">
-            <a className="ml-2 back-to-search">
-              <i className="fa fa-arrow-left"></i> Back to Search
-            </a>
-          </Link>
+      {/* <Link href="/search">
+        <a className="ml-2 back-to-search">
+          <i className="fa fa-arrow-left"></i> Back to Search
+        </a>
+      </Link> */}
 
-          <div className="row">
-            {rooms && rooms.length === 0 ? (
-              <div className="alert alert-danger mt-5 w-100">
-                <b>No Rooms.</b>
-              </div>
-            ) : (
-              rooms &&
-              rooms.map((room) => <RoomItem key={room._id} room={room} />)
-            )}
+      <div className="row">
+        {rooms && rooms.length === 0 ? (
+          <div className="alert alert-danger mt-5 w-100">
+            <b>No Rooms.</b>
           </div>
-        </section>
+        ) : (
+          rooms && rooms.map((room) => <RoomItem key={room._id} room={room} />)
+        )}
       </div>
-    </div>
+    </section>
   );
 };
 

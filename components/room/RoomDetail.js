@@ -10,39 +10,39 @@ const RoomDetail = ({ id }) => {
     dispatch(readRoomsById({ id }));
   }, []);
   const roomDetail = useSelector((state) => state.rooms?.room);
+  console.log(roomDetail);
   return (
     <>
       <Head>
-        <title>{roomDetail?.name} - Book My Room</title>
+        <title>{roomDetail?.name} -Noyo Room</title>
       </Head>
 
       <div className="container container-fluid">
-        <h2 className="mt-5">{roomDetail.name}</h2>
-        <p>{roomDetail?.address}</p>
+        <div>
+          <h2 className="mt-5">{roomDetail.name}</h2>
+          <p>{roomDetail?.address}</p>
 
-        <div className="ratings mt-auto mb-3">
-          <div className="rating-outer">
-            <div
-              className="rating-inner"
-              style={{ width: `${(roomDetail?.ratings / 5) * 100}%` }}
-            ></div>
+          <div className="ratings">
+            <div>{roomDetail?.numOfReviews} Reviews</div>
           </div>
-          <span id="no_of_reviews">({roomDetail?.numOfReviews} Reviews)</span>
         </div>
-        <Carousel hover="pause">
-          {roomDetail.images &&
-            roomDetail.images.map((image) => (
-              <Carousel.Item key={image.public_id}>
-                <div style={{ width: "100%", height: "440px" }}>
-                  <img
-                    className="d-block m-auto"
-                    src={image.url}
-                    // alt={roomDetail.name}
-                    // layout="fill"
-                  />
+
+        <Carousel hover={"pause"}>
+          {roomDetail.images?.map((image) => {
+            return (
+              <Carousel.Item>
+                <div
+                  style={{
+                    width: "100%",
+                    minHeight: "600px",
+                    height: "100%",
+                  }}
+                >
+                  <img src={image.url} className="d-block m-auto rounded" />
                 </div>
               </Carousel.Item>
-            ))}
+            );
+          })}
         </Carousel>
 
         <div className="row my-5">
@@ -56,7 +56,6 @@ const RoomDetail = ({ id }) => {
               <p className="price-per-night">
                 <b>${roomDetail.pricePerNight}</b> / night
               </p>
-
               <hr />
             </div>
           </div>

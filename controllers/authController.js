@@ -96,7 +96,6 @@ const forgotPassword = catchAsyncError(async (req, res, next) => {
   //reset password link
   const resetLink = `${origin}/password/reset/${resetToken}`;
   const message = `Your password reset url is as follow: \n\n ${resetLink} \n\n\ If you have not requested this email, then ignore it.`;
-  console.log(resetLink);
   try {
     sendEmail({
       email: user.email,
@@ -123,7 +122,6 @@ const resetPasssword = catchAsyncError(async (req, res, next) => {
     resetPasswordExpire: { $gt: Date.now() },
   });
   if (!user) {
-    console.log("test");
     return next(new ErrorHandler(`Invalid token or token expired`, 404));
   }
   console.log(req.body, user);
