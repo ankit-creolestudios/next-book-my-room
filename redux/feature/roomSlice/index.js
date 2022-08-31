@@ -10,6 +10,7 @@ const initialState = {
 };
 
 const BASE_URL = "http://localhost:3000";
+// ||"https://book-my-room-git-main-ankitkumar-creolestudio.vercel.app";
 export const readRooms = createAsyncThunk("rooms/read", async () => {
   try {
     const res = await axios.get(`${BASE_URL}/api/rooms`);

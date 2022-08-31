@@ -1684,6 +1684,15 @@
   optionalDependencies:
     "saslprep" "^1.0.3"
 
+mongoose-timezone@^1.3.0:
+  version "1.3.0"
+  resolved "https://npm.finqle.io/mongoose-timezone/-/mongoose-timezone-1.3.0.tgz#d28fbac014e9f306ba1a47163dc05259e5d6960a"
+  integrity sha512-e1CwLxIn82xrJ3GzszAOzixpSAPUdYrGKFcAlQHuCveNPh/jO0giEoUJk9wsCHF9U8Qr1TNlKgW2ak3GKMJpfQ==
+  dependencies:
+    lodash.get "^4.4.2"
+    lodash.set "^4.3.2"
+    moment-timezone "^0.5.26"
+
 "mongoose@^6.5.2":
   "integrity" "sha512-3CFDrSLtK2qjM1pZeZpLTUyqPRkc11Iuh74ZrwS4IwEJ3K2PqGnmyPLw7ex4Kzu37ujIMp3MAuiBlUjfrcb6hw=="
   "resolved" "https://npm.finqle.io/mongoose/-/mongoose-6.5.2.tgz"

@@ -85,35 +85,33 @@ const removeUser = catchAsyncError(async (req, res, next) => {
 });
 //password --------------------------------- /api/admin/password/forgot
 const forgotPassword = catchAsyncError(async (req, res, next) => {
-  console.log(req.body);
   const user = await User.findOne({ email: req.body.email });
-  console.log(user);
   if (!user) {
     return next(new ErrorHandler(`User not found with this email`, 404));
   }
   const resetToken = user.getResetPasswordToken();
-  // await user.save({ validateBeforeSave: false });
+  await user.save({ validateBeforeSave: false });
   // origin
   const { origin } = absoluteUrl(req);
   //reset password link
-  // const resetLink = `${origin}/password/reset/${"v"}`;
-  // const message = `Your password reset url is as follow: \n\n ${resetLink} \n\n\ If you have not requested this email, then ignore it.`;
-  // console.log(resetLink);
-  // try {
-  //   sendEmail({
-  //     email: user.email,
-  //     subject: "Reset Password",
-  //     message,
-  //   });
-  res
-    .status(200)
-    .json({ success: true, message: `Message sent to ${user.email}`, user });
-  // } catch (error) {
-  //   user.ResetPasswordToken = undefined;
-  //   user.ResetPasswordExpiry = undefined;
-  //   // await user.save({ validateBeforeSave: false });
-  //   return next(new ErrorHandler(error.message, 500));
-  // }
+  const resetLink = `${origin}/password/reset/${resetToken}`;
+  const message = `Your password reset url is as follow: \n\n ${resetLink} \n\n\ If you have not requested this email, then ignore it.`;
+  console.log(resetLink);
+  try {
+    sendEmail({
+      email: user.email,
+      subject: "Reset Password",
+      message,
+    });
+    res
+      .status(200)
+      .json({ success: true, message: `Message sent to ${user.email}`, user });
+  } catch (error) {
+    user.ResetPasswordToken = undefined;
+    user.ResetPasswordExpiry = undefined;
+    // await user.save({ validateBeforeSave: false });
+    return next(new ErrorHandler(error.message, 500));
+  }
 });
 const resetPasssword = catchAsyncError(async (req, res, next) => {
   const resetPasswordToken = crypto
@@ -122,19 +120,21 @@ const resetPasssword = catchAsyncError(async (req, res, next) => {
     .digest("hex");
   const user = await User.findOne({
     resetPasswordToken,
-    resetPasswordExpiry: { $gt: Date.now() },
+    resetPasswordExpire: { $gt: Date.now() },
   });
   if (!user) {
+    console.log("test");
     return next(new ErrorHandler(`Invalid token or token expired`, 404));
   }
+  console.log(req.body, user);
   if (req.body.password !== req.body.confirmPassword) {
     return next(new ErrorHandler(`wrong password`, 404));
   }
   user.password = req.body.password;
   user.resetPasswordToken = undefined;
-  user.resetPasswordExpiry = undefined;
+  user.resetPasswordExpire = undefined;
   await user.save({ validateBeforeSave: false });
-  res.status(200).json({});
+  res.status(200).json({ success: true, message: "password change success" });
 });
 export {
   registerUser,
