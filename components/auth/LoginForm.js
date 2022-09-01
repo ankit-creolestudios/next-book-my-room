@@ -8,8 +8,8 @@ import { Button, Form, Input } from "antd";
 const LoginForm = () => {
   const session = useSession();
   console.log(session, "session");
-  const [login, setLogin] = useState({ email: "", password: "" });
-  const [loading, setLoading] = useState(false);
+  // const [login, setLogin] = useState({ email: "", password: "" });
+  // const [loading, setLoading] = useState(false);
   const router = useRouter();
   const onFinish = async (values) => {
     setLoading(true);
@@ -18,7 +18,6 @@ const LoginForm = () => {
       email: values.email,
       password: values.password,
     });
-    console.log(signinUser);
   };
 
   const onFinishFailed = (errorInfo) => {

@@ -8,9 +8,17 @@ const initialState = {
   message: "",
 };
 
-const BASE_URL =
-  // "http://localhost:3000";
-  "https://book-my-room-git-main-ankitkumar-creolestudio.vercel.app";
+const BASE_URL = "http://localhost:3000";
+// "https://book-my-room-git-main-ankitkumar-creolestudio.vercel.app";
+export const registerUser = createAsyncThunk("user/register", async (data) => {
+  try {
+    const res = await axios.post(`${BASE_URL}/api/auth/register`, data);
+    console.log(res);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+});
 export const resetPassword = createAsyncThunk(
   "user/reset-password",
   async (data) => {
@@ -48,6 +56,18 @@ const userSlice = createSlice({
         ...state,
         ...payload,
       };
+    },
+    [registerUser.pending]: (state) => {
+      state.loading = true;
+    },
+    [registerUser.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.success = true;
+      state.message = payload.message;
+    },
+    [registerUser.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
     },
     [resetPassword.pending]: (state) => {
       state.loading = true;

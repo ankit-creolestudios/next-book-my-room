@@ -1,5 +1,6 @@
 @import "./header";
 @import "./footer";
+@import "./home";
 .wrapper {
   display: flex;
   justify-content: center;
@@ -17,6 +18,9 @@
 }
 .wrapper.register {
   margin: 3rem;
+}
+.wrapper.forgot {
+  margin: 2rem;
 }
 .page {
   min-height: 78vh;

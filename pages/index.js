@@ -1,10 +1,4 @@
-import Head from "next/head";
-import Image from "next/image";
 import HomeRoom from "../components/HomeRoom";
-import Layout from "../components/Layout";
-import { readRooms } from "../redux/feature/roomSlice";
-import { wrapper } from "../redux/store";
-import styles from "../styles/Home.module.css";
 
 export default function Home() {
   return (

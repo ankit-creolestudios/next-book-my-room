@@ -1,3 +1,5 @@
+/** @format */
+
 import NextAuth from "next-auth";
 import User from "../../../models/user";
 import dbConnect from "../../../config/dbConnect";
@@ -45,12 +47,12 @@ export default NextAuth({
       if (user) {
         token.user = user;
       }
-      return token;
+      return Promise.resolve(token);
     },
-    async session(session, token) {
+    async session(session, user) {
       // Add property to session, like an access_token from a provider.
-      session.token = token;
-      return session;
+      session.user = user;
+      return Promise.resolve(session);
     },
   },
 });

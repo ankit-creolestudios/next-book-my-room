@@ -1,3 +1,5 @@
+/** @format */
+
 import absoluteUrl from "next-absolute-url";
 import cloudinary from "cloudinary";
 import crypto from "crypto";
@@ -8,6 +10,7 @@ import catchAsyncError from "../middlewares/catchAsyncError";
 
 const registerUser = catchAsyncError(async (req, res) => {
   const { name, email, password, phone } = req.body;
+  console.log(req.body);
   const newUser = User.create({
     name,
     email,
@@ -23,10 +26,21 @@ const registerUser = catchAsyncError(async (req, res) => {
     message: "User register success",
   });
 });
+
+//profile curent user ------------ /api/me
+const currentUserProfile = catchAsyncError(async (req, res) => {
+  const user = User.findById(req.user.id);
+  console.log(user, "akaa");
+  res.status(200).json({
+    success: true,
+    user: user,
+  });
+});
 const getMyProfile = catchAsyncError(async (req, res) => {
   const user = User.findById(req.query.id);
   res.status(200).json({
     success: true,
+    user: user,
   });
 });
 //get user ------------------------ /api/admin/users
@@ -137,6 +151,7 @@ const resetPasssword = catchAsyncError(async (req, res, next) => {
 export {
   registerUser,
   getMyProfile,
+  currentUserProfile,
   getAdminUsers,
   getUserById,
   updateUser,

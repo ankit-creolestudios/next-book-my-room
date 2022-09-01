@@ -5,43 +5,26 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import ButtonLoader from "../Layout/ButtonLoader";
 import { Button, Form, Input } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../redux/feature/userSlice";
 const RegisterForm = () => {
-  const [register, setRegister] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-    avatar: "",
-  });
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 20000);
-  // }, [loading]);
-  const [loading, setLoading] = useState(false);
+  // const [register, setRegister] = useState({
+  //   name: "",
+  //   email: "",
+  //   phone: "",
+  //   password: "",
+  //   confirmPassword: "",
+  //   avatar: "",
+  // });
   const router = useRouter();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setRegister({
-      name: "",
-      email: "",
-      phone: "",
-      password: "",
-      confirmPassword: "",
-      avatar: "",
-    });
-    setTimeout(() => {
-      setLoading(false);
-    }, 10000);
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.userPv);
+  const handleSubmit = async (values) => {
+    dispatch(registerUser(values));
+    if (state?.message !== "") {
+      router.push("/login");
+    }
   };
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setRegister({ ...register, [name]: value });
-  };
-  console.log(register);
   return (
     <div className="container container-fluid">
       <div className="row wrapper register">
@@ -52,8 +35,7 @@ const RegisterForm = () => {
               labelCol={{ span: 8 }}
               wrapperCol={{ span: 16 }}
               initialValues={{ remember: true }}
-              // onFinish={onFinish}
-              // onFinishFailed={onFinishFailed}
+              onFinish={handleSubmit}
               autoComplete="off"
             >
               {" "}

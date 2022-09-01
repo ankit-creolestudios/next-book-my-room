@@ -1,3 +1,4 @@
+import { Button, Form, Input } from "antd";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,14 +22,43 @@ const ResetPasswordForm = () => {
   const state = useSelector((state) => state.usersPv);
   console.log(state);
   return (
-    <div>
-      ResetPassword
-      <div>
-        <div>
-          <div>
-            <h3>Reset Password</h3>
-          </div>
-          <form onSubmit={handleSubmit}>
+    <div className="container container-fluid">
+      <div className="row wrapper">
+        <div className="col-10 col-lg-5">
+          <div className="shadow-lg">
+            <Form
+              name="basic"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+              initialValues={{ remember: true }}
+              onFinish={handleSubmit}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
+            >
+              {" "}
+              <h1 className="mb-3">Reset Password</h1>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[
+                  { required: true, message: "Please enter your password" },
+                ]}
+              >
+                <Input.Password autoComplete="off" />
+              </Form.Item>
+              <div className="mb-4">
+                <Link href="/password/forgot-password">Forgot Password?</Link>
+              </div>
+              <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <Button type="primary" htmlType="submit">
+                  Login
+                </Button>
+              </Form.Item>
+              <div className="py-1 mt-3 text-center">
+                <Link href="/register">New User?</Link>
+              </div>
+            </Form>
+            {/* <form onSubmit={handleSubmit}>
             <div>
               <label>Password</label>
               <input
@@ -50,7 +80,8 @@ const ResetPasswordForm = () => {
             <div>
               <button type="submit">Submit</button>
             </div>
-          </form>
+          </form> */}
+          </div>
         </div>
       </div>
     </div>
