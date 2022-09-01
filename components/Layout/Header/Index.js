@@ -1,30 +1,36 @@
+import { Button, PageHeader } from "antd";
+import moment from "moment";
 import Link from "next/link";
 import React from "react";
 
 const Header = () => {
   return (
-    <nav className="navbar container">
-      <div className="row">
-        <Link href={"/"}>
-          <div className="">
-            <h3>Book My Room</h3>
-          </div>
-        </Link>
-        <div className="col-3"></div>
+    <>
+      <div className="container site-page-header-ghost-wrapper">
+        <PageHeader
+          ghost={false}
+          title={<Link href={"/"}>Noyo Room</Link>}
+          extra={[
+            <Link href={"/login"}>
+              <Button key="1" type="primary" danger>
+                Login
+              </Button>
+            </Link>,
+          ]}
+        />
       </div>
-    </nav>
-    // <nav class="navbar row justify-content-center sticky-top">
-    //   <div class="container">
-    //     <div class="col-3 p-0">
-    //       <div class="navbar-brand">
-    //         <img src="./images/bookit_logo.png" alt="BookIT" />
-    //       </div>
+    </>
+    // <nav className="navbar row justify-content-center sticky-top">
+    //   <div className="container">
+    //     <div className="col-6 p-0">
+    //       <Link href={"/"}>
+    //         <h3>Noyo Room</h3>
+    //       </Link>
     //     </div>
-
-    //     <div class="col-3 mt-3 mt-md-0 text-center">
-    //       <a class="btn btn-danger px-4 text-white login-header-btn float-right">
-    //         Login
-    //       </a>
+    //     <div className="col-3 mt-3 mt-md-0 text-center">
+    //       <Link href={"/login"}>
+    //         <a className="btn btn-danger px-4 float-right"> Login</a>
+    //       </Link>
     //     </div>
     //   </div>
     // </nav>

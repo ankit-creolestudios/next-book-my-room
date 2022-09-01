@@ -3,12 +3,9 @@ import RoomDetail from "../../components/room/RoomDetail";
 
 const SingleRoom = ({ id }) => {
   return (
-    <div>
-      SingleRoom
-      <div>
-        <RoomDetail id={id} />
-      </div>
-    </div>
+    <>
+      <RoomDetail id={id} />
+    </>
   );
 };
 

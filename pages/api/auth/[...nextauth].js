@@ -1,3 +1,5 @@
+/** @format */
+
 import NextAuth from "next-auth";
 import User from "../../../models/user";
 import dbConnect from "../../../config/dbConnect";
@@ -6,6 +8,7 @@ import Credentials from "next-auth/providers/credentials";
 export default NextAuth({
   session: {
     jwt: true,
+    maxAge: 30 * 60,
   },
   providers: [
     Credentials({
@@ -22,7 +25,7 @@ export default NextAuth({
         // Find user in the database
         const user = await User.findOne({ email }).select("+password");
 
-        console.log(user);
+        console.log(user, "aka");
         if (!user) {
           throw new Error("Invalid Email or Password");
         }
@@ -39,12 +42,16 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    jwt: async (token, user) => {
-      user && (token.user = user);
+    async jwt(token, user) {
+      console.log(user, "user");
+      if (user) {
+        token.user = user;
+      }
       return Promise.resolve(token);
     },
-    session: async (session, user) => {
-      session.user = user.user;
+    async session(session, user) {
+      // Add property to session, like an access_token from a provider.
+      session.user = user;
       return Promise.resolve(session);
     },
   },

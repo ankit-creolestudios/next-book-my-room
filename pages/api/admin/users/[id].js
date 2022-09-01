@@ -6,9 +6,14 @@ import {
   removeUser,
   updateUser,
 } from "../../../../controllers/authController";
+import { isAuthenticatUser } from "../../../../middlewares/auth";
 
 const handler = nc({ onError });
 dbConnect();
 
-handler.get(getUserById).put(updateUser).delete(removeUser);
+handler
+  .use(isAuthenticatUser)
+  .get(getUserById)
+  .put(updateUser)
+  .delete(removeUser);
 export default handler;

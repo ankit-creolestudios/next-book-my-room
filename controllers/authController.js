@@ -1,3 +1,5 @@
+/** @format */
+
 import absoluteUrl from "next-absolute-url";
 import cloudinary from "cloudinary";
 import crypto from "crypto";
@@ -23,10 +25,21 @@ const registerUser = catchAsyncError(async (req, res) => {
     message: "User register success",
   });
 });
+
+//profile curent user ------------ /api/me
+const currentUserProfile = catchAsyncError(async (req, res) => {
+  const user = User.findById(req.user.id);
+  console.log(user, "akaa");
+  res.status(200).json({
+    success: true,
+    user: user,
+  });
+});
 const getMyProfile = catchAsyncError(async (req, res) => {
   const user = User.findById(req.query.id);
   res.status(200).json({
     success: true,
+    user: user,
   });
 });
 //get user ------------------------ /api/admin/users
@@ -96,7 +109,6 @@ const forgotPassword = catchAsyncError(async (req, res, next) => {
   //reset password link
   const resetLink = `${origin}/password/reset/${resetToken}`;
   const message = `Your password reset url is as follow: \n\n ${resetLink} \n\n\ If you have not requested this email, then ignore it.`;
-  console.log(resetLink);
   try {
     sendEmail({
       email: user.email,
@@ -123,7 +135,6 @@ const resetPasssword = catchAsyncError(async (req, res, next) => {
     resetPasswordExpire: { $gt: Date.now() },
   });
   if (!user) {
-    console.log("test");
     return next(new ErrorHandler(`Invalid token or token expired`, 404));
   }
   console.log(req.body, user);
@@ -139,6 +150,7 @@ const resetPasssword = catchAsyncError(async (req, res, next) => {
 export {
   registerUser,
   getMyProfile,
+  currentUserProfile,
   getAdminUsers,
   getUserById,
   updateUser,
