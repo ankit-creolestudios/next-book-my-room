@@ -8,8 +8,9 @@ const initialState = {
   message: "",
 };
 
-const BASE_URL = "http://localhost:3000";
-// ||"https://book-my-room-git-main-ankitkumar-creolestudio.vercel.app";
+const BASE_URL =
+  // "http://localhost:3000";
+  "https://book-my-room-git-main-ankitkumar-creolestudio.vercel.app";
 export const resetPassword = createAsyncThunk(
   "user/reset-password",
   async (data) => {

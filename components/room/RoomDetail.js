@@ -30,7 +30,7 @@ const RoomDetail = ({ id }) => {
         <Carousel hover={"pause"}>
           {roomDetail.images?.map((image) => {
             return (
-              <Carousel.Item>
+              <Carousel.Item key={image.public_id}>
                 <div
                   style={{
                     width: "100%",

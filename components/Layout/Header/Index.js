@@ -11,8 +11,8 @@ const Header = () => {
           ghost={false}
           title={<Link href={"/"}>Noyo Room</Link>}
           extra={[
-            <Link href={"/login"}>
-              <Button key="1" type="primary" danger>
+            <Link key="1" href={"/login"}>
+              <Button type="primary" danger>
                 Login
               </Button>
             </Link>,

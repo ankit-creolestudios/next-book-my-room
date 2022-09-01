@@ -6,13 +6,13 @@ import {
   removeUser,
   updateUser,
 } from "../../../../controllers/authController";
-import { isAuthenticatUser } from "../../../../middlewares/auth";
+// import { isAuthenticatUser } from "../../../../middlewares/auth";
 
 const handler = nc({ onError });
 dbConnect();
 
 handler
-  .use(isAuthenticatUser)
+  // .use(isAuthenticatUser)
   .get(getUserById)
   .put(updateUser)
   .delete(removeUser);
