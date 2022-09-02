@@ -7,21 +7,24 @@ import ButtonLoader from "../Layout/ButtonLoader";
 import { Button, Form, Input } from "antd";
 const LoginForm = () => {
   const session = useSession();
-  console.log(session, "session");
+  // console.log(session, "session");
   // const [login, setLogin] = useState({ email: "", password: "" });
   // const [loading, setLoading] = useState(false);
   const router = useRouter();
   const onFinish = async (values) => {
-    setLoading(true);
     const signinUser = await signIn("credentials", {
       redirect: false,
       email: values.email,
       password: values.password,
     });
+    console.log(signinUser);
+    if (!signinUser?.error) {
+      router.push("/");
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("failed", errorInfo);
+    // console.log("failed", errorInfo);
   };
   // const handleSubmit = async (e) => {
   //   e.preventDefault();

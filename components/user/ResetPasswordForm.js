@@ -1,4 +1,5 @@
 import { Button, Form, Input } from "antd";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +21,7 @@ const ResetPasswordForm = () => {
     }
   };
   const state = useSelector((state) => state.usersPv);
-  console.log(state);
+  // console.log(state);
   return (
     <div className="container container-fluid">
       <div className="row wrapper">
@@ -32,7 +33,7 @@ const ResetPasswordForm = () => {
               wrapperCol={{ span: 16 }}
               initialValues={{ remember: true }}
               onFinish={handleSubmit}
-              onFinishFailed={onFinishFailed}
+              // onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
               {" "}
@@ -51,12 +52,9 @@ const ResetPasswordForm = () => {
               </div>
               <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Button type="primary" htmlType="submit">
-                  Login
+                  Reset Password
                 </Button>
               </Form.Item>
-              <div className="py-1 mt-3 text-center">
-                <Link href="/register">New User?</Link>
-              </div>
             </Form>
             {/* <form onSubmit={handleSubmit}>
             <div>

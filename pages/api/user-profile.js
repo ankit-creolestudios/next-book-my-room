@@ -9,5 +9,5 @@ import onError from "../../middlewares/error";
 const handler = nc({ onError });
 dbConnect();
 
-handler.use(isAuthenticatUser).get(currentUserProfile);
+handler.get(currentUserProfile);
 export default handler;

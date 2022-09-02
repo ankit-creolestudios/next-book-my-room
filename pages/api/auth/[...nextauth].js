@@ -42,17 +42,19 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    async jwt(token, user) {
-      console.log(user, "user");
+    async jwt({ token, user }) {
+      console.log(user, "user sign");
       if (user) {
         token.user = user;
+        console.log("token");
       }
-      return Promise.resolve(token);
+      return token;
     },
-    async session(session, user) {
+    async session({ session, token, user }) {
       // Add property to session, like an access_token from a provider.
-      session.user = user;
-      return Promise.resolve(session);
+      console.log(session, token, user, "sesion");
+      session.token = token;
+      return session;
     },
   },
 });

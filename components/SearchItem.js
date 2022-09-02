@@ -13,7 +13,7 @@ const SearchItem = () => {
     //   router.push("/");
     // }
   };
-  console.log(location);
+  // console.log(location);
   return (
     <div>
       Search

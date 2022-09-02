@@ -1,4 +1,5 @@
 import catchAsyncError from "../middlewares/catchAsyncError";
+import Booking from "../models/booking";
 import Room from "../models/room";
 const getAllRooms = catchAsyncError(async (req, res) => {
   const rooms = await Room.find();
@@ -137,6 +138,19 @@ const getRoomReviews = catchAsyncError(async (req, res) => {
     reviews: room.reviews,
   });
 });
+//review availability check
+const checkReviewAvailability = catchAsyncError(async (req, res) => {
+  const { roomId } = req.query;
+  const booking = await Booking.findOne({ user: req.user._id, room: roomId });
+  let isReviewAvailable = false;
+  if (booking.length > 0) {
+    isReviewAvailable = true;
+  }
+  res.status(200).json({
+    success: true,
+    isReviewAvailable,
+  });
+});
 // remove reviews --------------------- /api/reviews
 const removeReviews = catchAsyncError(async (req, res) => {
   const room = await Room.findById(req.query.userId);
@@ -167,6 +181,7 @@ export {
   removeRoom,
   newReview,
   getAllAdminRoom,
+  checkReviewAvailability,
   getRoomReviews,
   removeReviews,
 };

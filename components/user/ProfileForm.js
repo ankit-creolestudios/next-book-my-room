@@ -5,15 +5,17 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import ButtonLoader from "../Layout/ButtonLoader";
 import { Button, Form, Input } from "antd";
+import UploadFile from "../FormControls/UploadFile";
 const ProfileForm = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 10000);
+  const handleSubmit = async (values) => {
+    // console.log(values);
+    // e.preventDefault();
+    // setLoading(true);
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 10000);
   };
   return (
     <div className="container container-fluid">
@@ -60,6 +62,9 @@ const ProfileForm = () => {
                 ]}
               >
                 <Input.Password autoComplete="off" />
+              </Form.Item>
+              <Form.Item label="Password" name="avatar">
+                <UploadFile />
               </Form.Item>
               <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Button type="primary" htmlType="submit">

@@ -10,7 +10,7 @@ const RoomDetail = ({ id }) => {
     dispatch(readRoomsById({ id }));
   }, []);
   const roomDetail = useSelector((state) => state.rooms?.room);
-  console.log(roomDetail);
+  // console.log(roomDetail);
   return (
     <>
       <Head>

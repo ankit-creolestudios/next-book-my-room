@@ -71,6 +71,15 @@ const RegisterForm = () => {
               >
                 <Input.Password autoComplete="off" />
               </Form.Item>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[
+                  { required: true, message: "Please enter your password" },
+                ]}
+              >
+                <Input autoComplete="off" />
+              </Form.Item>
               <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Button type="primary" htmlType="submit">
                   Register

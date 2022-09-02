@@ -13,7 +13,7 @@ const HomeRoom = (props) => {
   }, []);
   const router = useRouter();
   const rooms = useSelector((state) => state?.rooms?.rooms);
-  console.log(rooms);
+  // console.log(rooms);
   return (
     <section id="rooms" className="container mt-5">
       <h2 className="mb-3 ml-2 stays-heading">

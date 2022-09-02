@@ -6,6 +6,7 @@ const initialState = {
   success: false,
   error: false,
   message: "",
+  user: {},
 };
 
 const BASE_URL = "http://localhost:3000";
@@ -13,7 +14,7 @@ const BASE_URL = "http://localhost:3000";
 export const registerUser = createAsyncThunk("user/register", async (data) => {
   try {
     const res = await axios.post(`${BASE_URL}/api/auth/register`, data);
-    console.log(res);
+    // console.log(res);
     return res.data;
   } catch (error) {
     return error;
@@ -39,13 +40,21 @@ export const forgotPassword = createAsyncThunk(
   async (email) => {
     try {
       const res = await axios.post(`${BASE_URL}/api/password/forgot`, email);
-      console.log(res);
+      // console.log(res);
       return res.data;
     } catch (error) {
       return error;
     }
   }
 );
+export const currentUser = createAsyncThunk("user/profile", async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/user-profile`);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+});
 const userSlice = createSlice({
   name: "user-slice",
   initialState,
@@ -66,6 +75,18 @@ const userSlice = createSlice({
       state.message = payload.message;
     },
     [registerUser.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+    [currentUser.pending]: (state) => {
+      state.loading = true;
+    },
+    [currentUser.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.success = true;
+      state.user = payload;
+    },
+    [currentUser.rejected]: (state) => {
       state.loading = false;
       state.error = true;
     },

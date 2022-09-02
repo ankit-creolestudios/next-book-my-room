@@ -15,7 +15,7 @@ const ForgotPasswordForm = () => {
   };
 
   const state = useSelector((state) => state.usersPv);
-  console.log(state);
+  // console.log(state);
   return (
     <div className="container container-fluid">
       <div className="row wrapper forgot">

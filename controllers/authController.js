@@ -7,10 +7,11 @@ import User from "../models/user";
 import { ErrorHandler } from "../utils/errorHandler";
 import sendEmail from "../utils/sendEmail";
 import catchAsyncError from "../middlewares/catchAsyncError";
+import { getSession } from "next-auth/react";
 
 const registerUser = catchAsyncError(async (req, res) => {
   const { name, email, password, phone } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   const newUser = User.create({
     name,
     email,
@@ -29,7 +30,10 @@ const registerUser = catchAsyncError(async (req, res) => {
 
 //profile curent user ------------ /api/me
 const currentUserProfile = catchAsyncError(async (req, res) => {
-  const user = User.findById(req.user.id);
+  const session = await getSession({ req });
+  console.log(req.user, req.token, req.query, req.body, session, "profile");
+  // const user = User.findById(req.user._id);
+  const user = await User.findById(session?.token?.sub);
   console.log(user, "akaa");
   res.status(200).json({
     success: true,
@@ -62,7 +66,7 @@ const getUserById = catchAsyncError(async (req, res, next) => {
 });
 //update user ------------------------------- /api/admin/users/:id
 const updateUser = catchAsyncError(async (req, res, err) => {
-  console.log(req.body, req.query, "user");
+  // console.log(req.body, req.query, "user");
   const newUser = {
     name: req.body.name,
     email: req.body.email,
@@ -75,19 +79,19 @@ const updateUser = catchAsyncError(async (req, res, err) => {
     useFindAndModify: false,
   });
 
-  console.log(err, "res");
+  // console.log(err, "res");
   res.status(200).json({
     success: true,
   });
 });
 //remove user ------------------------------ /api/admin/users/:id
 const removeUser = catchAsyncError(async (req, res, next) => {
-  console.log(req.query);
+  // console.log(req.query);
   const user = await User.findById(req.query.id);
   if (!user) {
     return next(new ErrorHandler("User not find by this id", 400));
   }
-  console.log(user);
+  // console.log(user);
   const imageId = user.avatar.public_id;
   // await cloudinary.v2.uploader.destroy(imageId);
   await user.remove();
@@ -138,7 +142,7 @@ const resetPasssword = catchAsyncError(async (req, res, next) => {
   if (!user) {
     return next(new ErrorHandler(`Invalid token or token expired`, 404));
   }
-  console.log(req.body, user);
+  // console.log(req.body, user);
   if (req.body.password !== req.body.confirmPassword) {
     return next(new ErrorHandler(`wrong password`, 404));
   }
