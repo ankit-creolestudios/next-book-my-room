@@ -9,8 +9,9 @@ const initialState = {
   user: {},
 };
 
-const BASE_URL = "http://localhost:3000";
-// "https://book-my-room-git-main-ankitkumar-creolestudio.vercel.app";
+const BASE_URL =
+  // "http://localhost:3000";
+  "https://book-my-room-git-main-ankitkumar-creolestudio.vercel.app";
 export const registerUser = createAsyncThunk("user/register", async (data) => {
   try {
     const res = await axios.post(`${BASE_URL}/api/auth/register`, data);

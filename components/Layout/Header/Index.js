@@ -38,6 +38,9 @@ const Header = () => {
                     />
                   </figure>
                   <span>{state?.user && state?.user.name}</span>
+                  <div>
+                    <Link href={"/booking"}>Booking Detail</Link>
+                  </div>
                   {/* <div>
                     <Link href={"/"} onClick={handleSignout}>
                       Logout

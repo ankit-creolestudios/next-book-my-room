@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
+import bookingSlice from "./feature/bookingSlice";
 import roomSlice from "./feature/roomSlice";
 import userSlice from "./feature/userSlice";
 const makeStore = () =>
@@ -7,6 +8,7 @@ const makeStore = () =>
     reducer: {
       rooms: roomSlice,
       usersPv: userSlice,
+      bookings: bookingSlice,
     },
     devTools: true,
   });

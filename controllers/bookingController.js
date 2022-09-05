@@ -31,7 +31,7 @@ const newBooking = catchAsyncError(async (req, res) => {
 });
 //my booking detail ------------ /api/booking/my-booking
 const myBookingDetail = catchAsyncError(async (req, res) => {
-  const bookings = await Booking.find({ user: req.user._id })
+  const bookings = await Booking.find({ user: session?.token?.sub })
     .populate({
       path: "room",
       select: "name pricePerNight image",
@@ -131,4 +131,5 @@ export {
   checkRoomBookDates,
   getBookingDetail,
   removeBooking,
+  myBookingDetail,
 };
