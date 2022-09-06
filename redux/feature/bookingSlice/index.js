@@ -1,3 +1,5 @@
+/** @format */
+
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import absoluteUrl from "next-absolute-url";
@@ -43,7 +45,22 @@ export const getBookingDetail = createAsyncThunk(
     }
   }
 );
-
+export const checkRoomAvailability = createAsyncThunk(
+  "booking/info",
+  async (data) => {
+    console.log(data);
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/api/booking/room-availability/check?roomId=${data.roomId}&checkInDate=${data.checkInDate}&checkOutDate=${data.checkOutDate}`
+      );
+      console.log(res);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+);
 const bookingSlice = createSlice({
   name: "booking",
   initialState,

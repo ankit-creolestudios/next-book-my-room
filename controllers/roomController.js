@@ -1,7 +1,10 @@
+/** @format */
+
 import catchAsyncError from "../middlewares/catchAsyncError";
 import Booking from "../models/booking";
 import Room from "../models/room";
-const getAllRooms = catchAsyncError(async (req, res) => {
+import { ErrorHandler } from "../utils/errorHandler";
+const getAllRooms = catchAsyncError(async (req, res, next) => {
   const rooms = await Room.find();
 
   res.status(200).json({
