@@ -1,3 +1,5 @@
+/** @format */
+
 import Booking from "../models/booking";
 import moment from "moment";
 import catchAsyncError from "../middlewares/catchAsyncError";
@@ -27,6 +29,31 @@ const newBooking = catchAsyncError(async (req, res) => {
   res.status(200).json({
     success: true,
     booking,
+  });
+});
+//check room availability ------------ /api/booking/check
+const checkRoomAvailability = catchAsyncError(async (req, res) => {
+  const { roomId, checkInDate, checkOutDate } = req.query;
+  checkInDate = new Date(checkInDate);
+  checkOutDate = new Date(checkOutDate);
+  const booking = await Booking.find({
+    room: roomId,
+    $and: [
+      {
+        checkInDate: { $lte: checkInDate },
+        checkOutDate: { $gte: checkOutDate },
+      },
+    ],
+  });
+  let isAvailable;
+  if (booking.length === 0) {
+    isAvailable = true;
+  } else {
+    isAvailable = false;
+  }
+  res.status(200).json({
+    success: true,
+    isAvailable,
   });
 });
 //my booking detail ------------ /api/booking/my-booking
@@ -59,27 +86,6 @@ const getBookingDetail = catchAsyncError(async (req, res) => {
   res.status(200).json({
     success: true,
     bookingDetail,
-  });
-});
-//check room availability ------------ /api/booking/check
-const checkRoomAvailability = catchAsyncError(async (req, res) => {
-  const { roomId, checkInDate, checkOutDate } = req.body;
-  checkInDate = new Date(checkInDate);
-  checkOutDate = new Date(checkOutDate);
-  const booking = await Booking.find({
-    room: roomId,
-    checkInDate: { checkInDate },
-    checkOutDate: { checkOutDate },
-  });
-  let isAvailable;
-  if (booking.length > 0) {
-    isAvailable = true;
-  } else {
-    isAvailable = false;
-  }
-  res.status(200).json({
-    success: true,
-    isAvailable,
   });
 });
 const checkRoomBookDates = catchAsyncError(async (req, res) => {

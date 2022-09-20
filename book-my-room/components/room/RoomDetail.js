@@ -9,9 +9,9 @@ import { readRoomsById } from "../../redux/feature/roomSlice";
 
 const RoomDetail = ({ roomDetail, dates }) => {
   const dispatch = useDispatch();
-  // const onChange = (date, dateString) => {
-  //   console.log(date, dateString);
-  // };
+  const onChange = (date, dateString) => {
+    console.log(date, dateString);
+  };
 
   const [checkInDate, setCheckInDate] = useState();
   const [checkOutDate, setCheckOutDate] = useState();

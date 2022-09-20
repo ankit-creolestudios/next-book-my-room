@@ -1,3 +1,5 @@
+/** @format */
+
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { HYDRATE } from "next-redux-wrapper";
@@ -9,9 +11,8 @@ const initialState = {
   error: false,
 };
 
-const BASE_URL =
-  // "http://localhost:3000";
-  "https://book-my-room-git-main-ankitkumar-creolestudio.vercel.app";
+const BASE_URL = "http://localhost:3000";
+// "https://book-my-room-git-main-ankitkumar-creolestudio.vercel.app";
 export const readRooms = createAsyncThunk("rooms/read", async () => {
   try {
     const res = await axios.get(`${BASE_URL}/api/rooms`);
