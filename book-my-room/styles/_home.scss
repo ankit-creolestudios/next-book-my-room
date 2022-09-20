@@ -1,0 +1,15 @@
+@media (min-width: 992px) {
+  .room-card {
+    height: 425px;
+  }
+  .room-detail {
+    button {
+      position: absolute;
+      bottom: 15px;
+      width: 80%;
+    }
+  }
+}
+.visually-hidden {
+  display: none;
+}

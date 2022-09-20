@@ -1,0 +1,17 @@
+.navbar {
+  background: #fff;
+  padding: 10px 0;
+  &.row {
+    margin-right: 0;
+  }
+}
+.avtar {
+  img {
+    width: 50px;
+  }
+  span {
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+}
