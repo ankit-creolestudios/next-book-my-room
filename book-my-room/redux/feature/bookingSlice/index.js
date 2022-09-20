@@ -51,6 +51,19 @@ export const checkBookingDates = createAsyncThunk(
     }
   }
 );
+export const checkingRoomAvailbility = createAsyncThunk(
+  "booking/roomAvailbility",
+  async (data) => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/api/check-room-availbility?roomId=${data.id}&checkInDate=${data.checkInDate}&checkOutDate=${data.checkOutDate}`
+      );
+      return res.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
 const bookingSlice = createSlice({
   name: "booking",
   initialState,

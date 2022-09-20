@@ -67,7 +67,6 @@ const getBookingDetail = catchAsyncError(async (req, res) => {
 });
 //check room availability ------------ /api/booking/check
 const checkRoomAvailability = catchAsyncError(async (req, res) => {
-  console.log(req.query, "roombook");
   const { roomId, checkInDate, checkOutDate } = req.query;
   checkInDate = new Date(checkInDate);
   checkOutDate = new Date(checkOutDate);
@@ -89,9 +88,7 @@ const checkRoomAvailability = catchAsyncError(async (req, res) => {
 });
 const checkRoomBookDates = catchAsyncError(async (req, res) => {
   const roomId = req.query.id;
-  console.log(roomId, "idppppppppppppppppp");
   const bookings = await Booking.find({ room: roomId });
-  console.log(bookings, "dates");
   const timedifference = moment().utcOffset() / 60;
   let bookingDates = [];
   bookings.forEach((booking) => {

@@ -2,8 +2,18 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Card } from "antd";
+import { useState } from "react";
 
 const RoomItem = ({ room }) => {
+  // let ratin = 0;
+  // let initialRating = 0;
+  // const avgRating = room.reviews.forEach((review, index) => {
+  //   console.log(review.rating);
+  //   initialRating = initialRating + review.rating;
+  //   if (index === room.reviews.length - 1) ratin = initialRating;
+  // });
+
+  // console.log(ratin);
   return (
     <div className="col-sm-12 col-md-6 col-lg-3 my-3 ">
       <Card
@@ -24,7 +34,7 @@ const RoomItem = ({ room }) => {
           <div className="rating-outer">
             <div
               className="rating-inner"
-              style={{ width: `${(room.ratings / 5) * 100}%` }}
+              style={{ width: `${(room.rating / 10) * 100}%` }}
             ></div>
           </div>
           <span id="no_of_reviews">({room.numOfReviews} Reviews)</span>

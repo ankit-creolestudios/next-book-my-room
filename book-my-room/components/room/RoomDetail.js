@@ -5,19 +5,20 @@ import { useState } from "react";
 import { Carousel } from "react-bootstrap";
 import ReactDatePicker from "react-datepicker";
 import { useDispatch, useSelector } from "react-redux";
-import { readRoomsById } from "../../redux/feature/roomSlice";
+import ReviewList from "../review/ReviewList";
+import RoomFeature from "./RoomFeature";
 
 const RoomDetail = ({ roomDetail, dates }) => {
   const dispatch = useDispatch();
-  const onChange = (date, dateString) => {
-    console.log(date, dateString);
-  };
+  // const onChange = (date, dateString) => {
+  //   console.log(date, dateString);
+  // };
 
   const [checkInDate, setCheckInDate] = useState();
   const [checkOutDate, setCheckOutDate] = useState();
   const [daysOfStay, setDaysOfStay] = useState();
   const excludedDates = [];
-  dates.forEach((date) => {
+  dates?.forEach((date) => {
     excludedDates.push(new Date(date));
   });
   const onChange = (dates) => {
@@ -40,8 +41,6 @@ const RoomDetail = ({ roomDetail, dates }) => {
       );
     }
   };
-
-  console.log(checkInDate, checkOutDate);
   return (
     <>
       <Head>
@@ -80,7 +79,7 @@ const RoomDetail = ({ roomDetail, dates }) => {
           <div className="col-12 col-md-6 col-lg-8">
             <h3>Description</h3>
             <p>{roomDetail.description}</p>
-            {/* <RoomFeatures room={room} /> */}
+            <RoomFeature room={roomDetail} />
           </div>
 
           <div className="col-12 col-md-6 col-lg-4">
@@ -146,6 +145,14 @@ const RoomDetail = ({ roomDetail, dates }) => {
             </div>
           </div>
         </div>
+
+        {roomDetail.reviews && roomDetail.reviews.length > 0 ? (
+          <ReviewList reviews={roomDetail.reviews} />
+        ) : (
+          <p>
+            <b>No Reviews on this room</b>
+          </p>
+        )}
       </div>
     </>
   );

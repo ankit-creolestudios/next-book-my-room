@@ -9,7 +9,6 @@ import { wrapper } from "../../redux/store";
 const SingleRoom = () => {
   const state = useSelector((state) => state?.rooms);
   const bookingDate = useSelector((state) => state.bookings);
-  console.log(state, bookingDate);
   return (
     <>
       <RoomDetail

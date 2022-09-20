@@ -7,6 +7,7 @@ const initialState = {
   loading: false,
   success: false,
   error: false,
+  message: {},
 };
 
 const BASE_URL = "http://localhost:3000";
@@ -30,6 +31,14 @@ export const readRoomsById = createAsyncThunk(
     }
   }
 );
+export const newReview = createAsyncThunk("roomreview/new", async (data) => {
+  try {
+    const res = await axios.put(`${BASE_URL}/api/review/?${data.id}`);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+});
 const roomSlice = createSlice({
   name: "myroom",
   initialState,
@@ -62,6 +71,18 @@ const roomSlice = createSlice({
       state.room = payload.room;
     },
     [readRoomsById.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+    [newReview.pending]: (state) => {
+      state.loading = true;
+    },
+    [newReview.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.success = true;
+      state.message = payload;
+    },
+    [newReview.rejected]: (state, { payload }) => {
       state.loading = false;
       state.error = true;
     },

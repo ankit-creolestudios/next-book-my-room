@@ -95,8 +95,8 @@ const removeRoom = async (req, res) => {
 const newReview = catchAsyncError(async (req, res) => {
   const { roomId, rating, comment } = req.body;
   const review = {
-    user: req.user._id,
-    name: req.user.name,
+    user: "630319f6acb599f6537f230d",
+    name: "ankit kumar",
     rating: Number(rating),
     comment,
   };
