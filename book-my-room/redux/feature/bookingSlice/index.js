@@ -9,6 +9,7 @@ const initialState = {
   dates: [],
   success: false,
   error: false,
+  roomAvailbility: {},
 };
 
 const BASE_URL = "http://localhost:3000";
@@ -109,6 +110,17 @@ const bookingSlice = createSlice({
     },
 
     [checkBookingDates.rejected]: (state, payload) => {
+      state.loading = false;
+      state.error = true;
+    },
+    [checkingRoomAvailbility.pending]: (state) => {
+      state.loading = true;
+    },
+    [checkingRoomAvailbility.fulfilled]: (state, payload) => {
+      state.loading = false;
+      state.roomAvailbility = payload;
+    },
+    [checkingRoomAvailbility.rejected]: (state) => {
       state.loading = false;
       state.error = true;
     },

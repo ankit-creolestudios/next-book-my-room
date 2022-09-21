@@ -31,7 +31,6 @@ const registerUser = catchAsyncError(async (req, res) => {
 //profile curent user ------------ /api/me
 const currentUserProfile = catchAsyncError(async (req, res) => {
   const session = await getSession({ req });
-  console.log(req.user, req.token, req.query, req.body, session, "profile");
   // const user = User.findById(req.user._id);
   const user = await User.findById(session?.token?.sub);
   res.status(200).json({

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Carousel } from "react-bootstrap";
 import ReactDatePicker from "react-datepicker";
 import { useDispatch, useSelector } from "react-redux";
+import { checkingRoomAvailbility } from "../../redux/feature/bookingSlice";
 import ReviewList from "../review/ReviewList";
 import RoomFeature from "./RoomFeature";
 
@@ -37,7 +38,11 @@ const RoomDetail = ({ roomDetail, dates }) => {
       setDaysOfStay(days);
 
       dispatch(
-        checkBooking(id, checkInDate.toISOString(), checkOutDate.toISOString())
+        checkingRoomAvailbility({
+          id: id,
+          checkInDate: checkInDate.toISOString(),
+          checkOutDate: checkOutDate.toISOString(),
+        })
       );
     }
   };

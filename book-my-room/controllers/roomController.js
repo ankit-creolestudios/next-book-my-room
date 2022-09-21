@@ -1,6 +1,8 @@
 import catchAsyncError from "../middlewares/catchAsyncError";
 import Booking from "../models/booking";
 import Room from "../models/room";
+import cloudinary from "cloudinary";
+
 const getAllRooms = catchAsyncError(async (req, res) => {
   const rooms = await Room.find();
 
@@ -12,20 +14,34 @@ const getAllRooms = catchAsyncError(async (req, res) => {
 });
 
 // new room creat /api/rooms
-const newRoom = async (req, res) => {
-  try {
-    const room = await Room.create(req.body);
-    res.status(200).json({
-      success: true,
-      room,
+const newRoom = catchAsyncError(async (req, res) => {
+  let images = [];
+  if (typeof req.body.images === "string") {
+    images.push(req.body.images);
+  } else {
+    images = req.body.images;
+  }
+
+  console.log(req.body.images, "image");
+  const imageLink = [];
+  for (let i = 0; i < images.length; i++) {
+    const result = await cloudinary.v2.uploader.upload(images[i].url, {
+      folder: "rooms",
     });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      error: error.message,
+    console.log(result, "image");
+    imageLink.push({
+      public_id: result.public_id,
+      url: result.url,
     });
   }
-};
+
+  req.body.images = imageLink;
+  const room = await Room.create(req.body);
+  res.status(200).json({
+    success: true,
+    room,
+  });
+});
 
 // get room by id           /api/rooms/:id
 const getSingleRoom = async (req, res) => {

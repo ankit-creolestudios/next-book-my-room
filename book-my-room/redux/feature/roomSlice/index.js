@@ -31,6 +31,23 @@ export const readRoomsById = createAsyncThunk(
     }
   }
 );
+export const newRoom = createAsyncThunk("room/new-room", async (data) => {
+  try {
+    const res = await axios.post(`${BASE_URL}/api/room`, data);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const removeRoom = createAsyncThunk("room/remove-room", async (data) => {
+  try {
+    const res = await axios.delete(`${BASE_URL}/api/rooms/${data.id}`);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+});
 export const newReview = createAsyncThunk("roomreview/new", async (data) => {
   try {
     const res = await axios.put(`${BASE_URL}/api/review/?${data.id}`);
@@ -39,6 +56,7 @@ export const newReview = createAsyncThunk("roomreview/new", async (data) => {
     return error;
   }
 });
+
 const roomSlice = createSlice({
   name: "myroom",
   initialState,
@@ -84,6 +102,28 @@ const roomSlice = createSlice({
     },
     [newReview.rejected]: (state, { payload }) => {
       state.loading = false;
+      state.error = true;
+    },
+    [newRoom.pending]: (state) => {
+      state.loading = true;
+    },
+    [newRoom.fulfilled]: (state, payload) => {
+      state.loading = false;
+      state.success = true;
+      state.message = payload;
+    },
+    [newRoom.rejected]: (state) => {
+      state.error = true;
+    },
+    [removeRoom.pending]: (state) => {
+      state.loading = true;
+    },
+    [removeRoom.fulfilled]: (state, payload) => {
+      state.loading = false;
+      state.success = true;
+      state.message = payload;
+    },
+    [removeRoom.rejected]: (state) => {
       state.error = true;
     },
   },
