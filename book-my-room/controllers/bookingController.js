@@ -108,7 +108,7 @@ const checkRoomBookDates = catchAsyncError(async (req, res) => {
   res.status(200).json({ success: true, bookingDates });
 });
 const getAdminBookings = catchAsyncError(async (req, res) => {
-  const booking = await Booking.find({ user: req.user._id }).populate(
+  const booking = await Booking.find().populate(
     {
       path: "room",
       select: "name pricePerNight image",
@@ -137,4 +137,5 @@ export {
   getBookingDetail,
   removeBooking,
   myBookingDetail,
+  getAdminBookings,
 };

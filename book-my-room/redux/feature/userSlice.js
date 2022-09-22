@@ -21,6 +21,7 @@ export const registerUser = createAsyncThunk("user/register", async (data) => {
     return error;
   }
 });
+
 export const resetPassword = createAsyncThunk(
   "user/reset-password",
   async (data) => {
@@ -48,6 +49,14 @@ export const forgotPassword = createAsyncThunk(
     }
   }
 );
+export const getAdminUsers = createAsyncThunk("user/user", async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/admin/users`);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+});
 export const currentUser = createAsyncThunk("user/profile", async () => {
   try {
     const res = await axios.get(`${BASE_URL}/api/user-profile`);
@@ -56,6 +65,44 @@ export const currentUser = createAsyncThunk("user/profile", async () => {
     return error;
   }
 });
+
+export const getMyProfile = createAsyncThunk("user/profile", async (data) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/user/${data.id}`);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const updateUser = createAsyncThunk(
+  "user/profileUpdate",
+  async (data) => {
+    try {
+      const res = await axios.put(`${BASE_URL}/api/user/${data.id}`);
+      return res.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+export const removeUser = createAsyncThunk("user/removeUser", async (data) => {
+  try {
+    const res = await axios.delete(`${BASE_URL}/api/user/${data.id}`);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+});
+export const getUserById = createAsyncThunk("user/profile", async (data) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/user/${data.id}`);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+});
+
 const userSlice = createSlice({
   name: "user-slice",
   initialState,
@@ -76,6 +123,18 @@ const userSlice = createSlice({
       state.message = payload.message;
     },
     [registerUser.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+    [getAdminUsers.pending]: (state) => {
+      state.loading = true;
+    },
+    [getAdminUsers.fulfilled]: (state, payload) => {
+      state.loading = false;
+      state.success = true;
+      state.users = payload.payload;
+    },
+    [getAdminUsers.rejected]: (state) => {
       state.loading = false;
       state.error = true;
     },
@@ -112,6 +171,40 @@ const userSlice = createSlice({
       state.message = payload.message;
     },
     [forgotPassword.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+    [getMyProfile.pending]: (state) => {
+      state.loading = true;
+    },
+    [getMyProfile.fulfilled]: (state, payload) => {
+      state.loading = false;
+      state.success = true;
+      state.user = payload;
+    },
+    [getMyProfile.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+    [updateUser.pending]: (state) => {
+      state.loading = true;
+    },
+    [updateUser.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.success = true;
+    },
+    [updateUser.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+    [removeUser.pending]: (state) => {
+      state.loading = true;
+    },
+    [removeUser.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.success = true;
+    },
+    [removeUser.rejected]: (state) => {
       state.loading = false;
       state.error = true;
     },

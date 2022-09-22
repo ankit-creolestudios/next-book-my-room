@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import absoluteUrl from "next-absolute-url";
 import { HYDRATE } from "next-redux-wrapper";
+
 const initialState = {
   bookings: [],
   booking: {},
@@ -14,6 +15,18 @@ const initialState = {
 
 const BASE_URL = "http://localhost:3000";
 // "https://book-my-room-git-main-ankitkumar-creolestudio.vercel.app";
+
+export const newBooking = createAsyncThunk(
+  "booking/newBooking",
+  async (data) => {
+    try {
+      const res = await axios.post(`${BASE_URL}/api/booking`, data);
+      return res.data;
+    } catch (error) {
+      return res.data;
+    }
+  }
+);
 export const myBooking = createAsyncThunk("booking/info", async (data) => {
   try {
     const { origin } = absoluteUrl(data.req);
@@ -39,6 +52,7 @@ export const getBookingDetail = createAsyncThunk(
     }
   }
 );
+
 export const checkBookingDates = createAsyncThunk(
   "booking/checkDates",
   async (data) => {
@@ -65,6 +79,25 @@ export const checkingRoomAvailbility = createAsyncThunk(
     }
   }
 );
+export const getAdminBooking = createAsyncThunk("booking/booking", async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/admin/booking`);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+});
+export const removeBooking = createAsyncThunk(
+  "booking/removeBooking",
+  async (data) => {
+    try {
+      const res = await axios.delete(`${BASE_URL}/api/booking/${data.id}`);
+      return res.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
 const bookingSlice = createSlice({
   name: "booking",
   initialState,
@@ -76,6 +109,17 @@ const bookingSlice = createSlice({
         ...state,
         ...payload.bookings,
       };
+    },
+    [newBooking.pending]: (state) => {
+      state.loading = true;
+    },
+    [newBooking.fulfilled]: (state, payload) => {
+      state.loading = false;
+      state.success = true;
+    },
+    [newBooking.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
     },
     [myBooking.pending]: (state) => {
       state.loading = true;
@@ -121,6 +165,29 @@ const bookingSlice = createSlice({
       state.roomAvailbility = payload;
     },
     [checkingRoomAvailbility.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+    [getAdminBooking.pending]: (state) => {
+      state.loading = true;
+    },
+    [getAdminBooking.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.success = true;
+      state.bookings = payload;
+    },
+    [getAdminBooking.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+    [removeBooking.pending]: (state) => {
+      state.loading = true;
+    },
+    [removeBooking.fulfilled]: (state, payload) => {
+      state.loading = false;
+      state.success = true;
+    },
+    [removeBooking.rejected]: (state) => {
       state.loading = false;
       state.error = true;
     },

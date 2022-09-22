@@ -40,9 +40,27 @@ export const newRoom = createAsyncThunk("room/new-room", async (data) => {
   }
 });
 
+export const updateRoom = createAsyncThunk("room/room", async () => {
+  try {
+    const res = await axios.put(`${BASE_URL}/api/rooms/${data.id}`);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+});
+
 export const removeRoom = createAsyncThunk("room/remove-room", async (data) => {
   try {
     const res = await axios.delete(`${BASE_URL}/api/rooms/${data.id}`);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+});
+
+export const getAdminRoom = createAsyncThunk("rooms/adminRoom", async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/admin/room`);
     return res.data;
   } catch (error) {
     return error;
@@ -57,6 +75,37 @@ export const newReview = createAsyncThunk("roomreview/new", async (data) => {
   }
 });
 
+export const getRoomReview = createAsyncThunk("rooms/review", async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}/review/?id=${data.id}`);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+});
+export const checkReviewAvailbility = createAsyncThunk(
+  "room/review",
+  async () => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/api/review/check-review?roomId=${data.roomId}`
+      );
+      return res.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+export const removeReview = createAsyncThunk("roomReview/review", async () => {
+  try {
+    const res = await axios.delete(
+      `${BASE_URL}/api/review/?id=${data.id}&roomId=${data.roomId}`
+    );
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+});
 const roomSlice = createSlice({
   name: "myroom",
   initialState,
@@ -92,6 +141,41 @@ const roomSlice = createSlice({
       state.loading = false;
       state.error = true;
     },
+
+    [updateRoom.pending]: (state) => {
+      state.loading = true;
+    },
+    [updateRoom.fulfilled]: (state, payload) => {
+      state.loading = false;
+      state.success = true;
+    },
+    [updateRoom.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+    [removeRoom.pending]: (state) => {
+      state.loading = true;
+    },
+    [removeRoom.fulfilled]: (state, payload) => {
+      state.loading = false;
+      state.success = true;
+    },
+    [removeRoom.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+    [getAdminRoom.pending]: (state) => {
+      state.loading = true;
+    },
+    [getAdminRoom.fulfilled]: (state) => {
+      state.loading = false;
+      state.success = true;
+      state.users = payload;
+    },
+    [getAdminRoom.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
     [newReview.pending]: (state) => {
       state.loading = true;
     },
@@ -106,6 +190,30 @@ const roomSlice = createSlice({
     },
     [newRoom.pending]: (state) => {
       state.loading = true;
+    },
+    [checkReviewAvailbility.pending]: (state) => {
+      state.loading = true;
+    },
+    [checkReviewAvailbility.fulfilled]: (state, payload) => {
+      state.loading = false;
+      state.success = true;
+      state.message = payload;
+    },
+    [checkReviewAvailbility.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+    [removeReview.pending]: (state) => {
+      state.loading = true;
+    },
+    [removeReview.fulfilled]: (state) => {
+      state.loading = false;
+      state.success = true;
+      state.users = payload;
+    },
+    [removeReview.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
     },
     [newRoom.fulfilled]: (state, payload) => {
       state.loading = false;

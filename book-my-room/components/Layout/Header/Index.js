@@ -47,11 +47,21 @@ const Header = () => {
                   </div> */}
                 </div>
               ) : (
-                <Link key="1" href={"/login"}>
-                  <Button type="primary" danger>
-                    Login
-                  </Button>
-                </Link>
+                <>
+                  <Link key="12" href={"/admin/rooms"}>
+                    Admin Rooms
+                  </Link>
+                  <Link key="12" href={"/admin/rooms/new-rooms"}>
+                    <Button type="primary" danger>
+                      Add New Room
+                    </Button>
+                  </Link>
+                  <Link key="1" href={"/login"}>
+                    <Button type="primary" danger>
+                      Login
+                    </Button>
+                  </Link>
+                </>
               )}
             </React.Fragment>,
           ]}
