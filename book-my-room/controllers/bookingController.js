@@ -108,16 +108,13 @@ const checkRoomBookDates = catchAsyncError(async (req, res) => {
   res.status(200).json({ success: true, bookingDates });
 });
 const getAdminBookings = catchAsyncError(async (req, res) => {
-  const booking = await Booking.find().populate(
-    {
-      path: "room",
-      select: "name pricePerNight image",
-    },
-    {
-      path: "user",
-      select: "name email",
-    }
-  );
+  const booking = await Booking.find().populate("room", "user");
+  console.log(booking);
+  res.status(200).json({
+    success: true,
+    count: booking.length,
+    booking,
+  });
 });
 //remove booking   ------------ /api/booking/:id
 const removeBooking = catchAsyncError(async (req, res, next) => {

@@ -82,6 +82,7 @@ export const checkingRoomAvailbility = createAsyncThunk(
 export const getAdminBooking = createAsyncThunk("booking/booking", async () => {
   try {
     const res = await axios.get(`${BASE_URL}/api/admin/booking`);
+    console.log(res);
     return res.data;
   } catch (error) {
     return error;
